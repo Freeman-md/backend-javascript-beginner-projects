@@ -1,0 +1,15 @@
+{
+  "name": "01-cli-task-tracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test --test-concurrency=1"
+  },
+  "bin": {
+    "task-cli": "./bin/task-cli.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
