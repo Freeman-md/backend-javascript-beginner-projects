@@ -1,16 +1,27 @@
 function formatEvent(event) {
     const eventType = event.type
-    const repoName = event.repo && event.repo.name
+    const repoName = getRepoName(event)
 
     if (eventType === 'PushEvent') {
-        const commitCount = event.payload.commits.length
-        const commitLabel = commitCount === 1 ? 'commit' : 'commits'
+        const commits = event.payload && Array.isArray(event.payload.commits)
+            ? event.payload.commits
+            : []
 
-        return `Pushed ${commitCount} ${commitLabel} to ${repoName}`
+        if (commits.length === 0) {
+            return `Pushed to ${repoName}`
+        }
+
+        const commitLabel = commits.length === 1 ? 'commit' : 'commits'
+
+        return `Pushed ${commits.length} ${commitLabel} to ${repoName}`
     }
 
     if (eventType === 'IssuesEvent') {
-        return `${capitalize(event.payload.action)} an issue in ${repoName}`
+        const action = event.payload && event.payload.action
+            ? capitalize(event.payload.action)
+            : 'Updated'
+
+        return `${action} an issue in ${repoName}`
     }
 
     if (eventType === 'WatchEvent') {
@@ -22,7 +33,11 @@ function formatEvent(event) {
     }
 
     if (eventType === 'CreateEvent') {
-        return `Created ${event.payload.ref_type} in ${repoName}`
+        const refType = event.payload && event.payload.ref_type
+            ? event.payload.ref_type
+            : 'resource'
+
+        return `Created ${refType} in ${repoName}`
     }
 
     return `${eventType} in ${repoName}`
@@ -36,6 +51,14 @@ function formatEvents(events) {
     return events.map(function(event) {
         return `- ${formatEvent(event)}`
     })
+}
+
+function getRepoName(event) {
+    if (event.repo && event.repo.name) {
+        return event.repo.name
+    }
+
+    return 'unknown repository'
 }
 
 function capitalize(value) {

@@ -39,6 +39,37 @@ test('formats push event with one commit', function() {
     )
 })
 
+test('formats push event when commits array is missing', function() {
+    const event = {
+        type: 'PushEvent',
+        repo: {
+            name: 'freemancodz/test-repo'
+        },
+        payload: {
+            ref: 'refs/heads/main'
+        }
+    }
+
+    assert.strictEqual(
+        formatEvent(event),
+        'Pushed to freemancodz/test-repo'
+    )
+})
+
+test('formats push event when payload is missing', function() {
+    const event = {
+        type: 'PushEvent',
+        repo: {
+            name: 'freemancodz/test-repo'
+        }
+    }
+
+    assert.strictEqual(
+        formatEvent(event),
+        'Pushed to freemancodz/test-repo'
+    )
+})
+
 test('formats issues event', function() {
     const event = {
         type: 'IssuesEvent',
@@ -53,6 +84,21 @@ test('formats issues event', function() {
     assert.strictEqual(
         formatEvent(event),
         'Opened an issue in freemancodz/test-repo'
+    )
+})
+
+test('formats issues event when action is missing', function() {
+    const event = {
+        type: 'IssuesEvent',
+        repo: {
+            name: 'freemancodz/test-repo'
+        },
+        payload: {}
+    }
+
+    assert.strictEqual(
+        formatEvent(event),
+        'Updated an issue in freemancodz/test-repo'
     )
 })
 
@@ -103,6 +149,21 @@ test('formats create event', function() {
     )
 })
 
+test('formats create event when ref type is missing', function() {
+    const event = {
+        type: 'CreateEvent',
+        repo: {
+            name: 'freemancodz/test-repo'
+        },
+        payload: {}
+    }
+
+    assert.strictEqual(
+        formatEvent(event),
+        'Created resource in freemancodz/test-repo'
+    )
+})
+
 test('formats unknown event with fallback output', function() {
     const event = {
         type: 'PullRequestEvent',
@@ -115,6 +176,19 @@ test('formats unknown event with fallback output', function() {
     assert.strictEqual(
         formatEvent(event),
         'PullRequestEvent in freemancodz/test-repo'
+    )
+})
+
+test('formats event when repo name is missing', function() {
+    const event = {
+        type: 'WatchEvent',
+        repo: {},
+        payload: {}
+    }
+
+    assert.strictEqual(
+        formatEvent(event),
+        'Starred unknown repository'
     )
 })
 
