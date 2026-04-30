@@ -6,7 +6,10 @@ The projects come from the Backend Developer roadmap and are organized as standa
 
 ## Projects
 
-- [01-cli-task-tracker](./01-cli-task-tracker) - A command-line task tracker built with Node.js, filesystem storage, and JSON persistence.
+| Project | Roadmap Project Page | Summary |
+| --- | --- | --- |
+| [01-cli-task-tracker](./01-cli-task-tracker) | [Task Tracker](https://roadmap.sh/projects/task-tracker?fl=0) | A command-line task tracker built with Node.js, filesystem storage, and JSON persistence. |
+| [02-github-user-activity](./02-github-user-activity) | [GitHub User Activity](https://roadmap.sh/projects/github-user-activity) | A command-line tool that fetches and formats recent public GitHub activity using the GitHub API. |
 
 ## Purpose
 
